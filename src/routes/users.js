@@ -1,5 +1,5 @@
 function getAllUsers(request, response) {
-  let users = [
+  const users = [
     {
       name: 'John',
       age: 30
