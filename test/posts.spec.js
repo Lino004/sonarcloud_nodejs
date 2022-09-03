@@ -21,7 +21,7 @@ describe('Get all posts request', () => {
     test('200 - posts', async () => {
         const expectedStatusCode = 200;
         const expectedReponse = { 
-            posts: ['A', 'C'] 
+            posts: ['A', 'B'] 
         };
 
         getAllPosts(mockRequest, mockResponse);        
