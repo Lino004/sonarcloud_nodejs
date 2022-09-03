@@ -27,7 +27,7 @@ describe('Get all users request', () => {
                     age: 30
                 },
                 {
-                    name: 'Pete',
+                    name: 'Peter',
                     age: 40
                 }
             ]
