@@ -4,7 +4,7 @@ const app = express();
 const users = require('./routes/users');
 const posts = require('./routes/posts');
 
-app.disable('x-powered-by');
+// app.disable('x-powered-by');
 
 app.get('/users/all', users.getAllUsers);
 app.get('/posts/all', posts.getAllPosts);
