@@ -52,12 +52,12 @@ jobs:
       - name: Debug
         run: echo ${{ env.BRANCH_NAME }}
 
-      # - uses: actions/checkout@v2
-      # - name: Deploy main
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: root
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     script: |
-      #       echo 'Deploy main' >> ~/test
+      - name: Deploy main
+        if: env.BRANCH_NAME == 'main'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo 'Deploy main' >> ~/test
