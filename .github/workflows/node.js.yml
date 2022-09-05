@@ -7,44 +7,48 @@ on:
     branches: [ main ]
 
 jobs:
-  unit-test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: npm install
-      - run: npm test
+  # unit-test:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [16.x]
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: Install dependencies
+  #       run: npm install
+  #     - run: npm test
 
-  sonarcloud:
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/checkout@v2
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # sonarcloud:
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         # Disabling shallow clone is recommended for improving relevancy of reporting
+  #         fetch-depth: 0
+  #     - name: SonarCloud Scan
+  #       uses: sonarsource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   
   deploy-main:
-    if: github.branch == 'main'
+    # if: github.branch == 'main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy main
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            echo 'Deploy main' >> ~/test
+      - name: Echo
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo ${{ github.head_ref || github.ref_name }} 
+
+      # - uses: actions/checkout@v2
+      # - name: Deploy main
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: root
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       echo 'Deploy main' >> ~/test
