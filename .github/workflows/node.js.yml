@@ -41,7 +41,6 @@ jobs:
     steps:
       - name: Echo
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        run: echo ${{ github.head_ref || github.ref_name }} 
 
       # - uses: actions/checkout@v2
       # - name: Deploy main
