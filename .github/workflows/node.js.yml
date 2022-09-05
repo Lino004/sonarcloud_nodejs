@@ -39,8 +39,18 @@ jobs:
     # if: github.branch == 'main'
     runs-on: ubuntu-latest
     steps:
-      - name: Echo
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      - name: Get branch name (merge)
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+
+      - name: Get branch name (pull request)
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+      - name: Debug
+        run: echo ${{ env.BRANCH_NAME }}
 
       # - uses: actions/checkout@v2
       # - name: Deploy main
