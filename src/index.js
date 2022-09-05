@@ -9,6 +9,7 @@ app.disable('x-powered-by');
 app.get('/users/all', users.getAllUsers);
 app.get('/posts/all', posts.getAllPosts);
 
-app.listen(5000, function () {
-  console.log('Started application on port %d', 5000);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, function () {
+  console.log('Started application on port %d', PORT);
 });
